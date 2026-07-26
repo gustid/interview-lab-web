@@ -228,7 +228,30 @@ export function InterviewDetailsPage() {
       {interview.status === 'COMPLETED' && (
         <Paper variant="outlined" sx={{ p: 3 }}>
           <Stack spacing={2}>
-            <Typography variant="h6">Feedback</Typography>
+            <Stack
+              direction="row"
+              sx={{ justifyContent: 'space-between', alignItems: 'center' }}
+            >
+              <Typography variant="h6">Feedback</Typography>
+              {feedbackQuery.data === null && (
+                <Button
+                  component={RouterLink}
+                  to={`/interviews/${interview.id}/feedback/new`}
+                  variant="contained"
+                >
+                  Add feedback
+                </Button>
+              )}
+              {feedbackQuery.data && (
+                <Button
+                  component={RouterLink}
+                  to={`/interviews/${interview.id}/feedback/edit`}
+                  variant="outlined"
+                >
+                  Edit feedback
+                </Button>
+              )}
+            </Stack>
             <Divider />
             {feedbackQuery.isPending && <CircularProgress size={24} />}
             {feedbackQuery.isError && (

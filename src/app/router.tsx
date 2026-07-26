@@ -10,6 +10,7 @@ import { InterviewsPage } from '../pages/InterviewsPage';
 import { CreateInterviewPage } from '../pages/CreateInterviewPage';
 import { InterviewDetailsPage } from '../pages/InterviewDetailsPage';
 import { EditInterviewPage } from '../pages/EditInterviewPage';
+import { FeedbackFormPage } from '../pages/FeedbackFormPage';
 import { ProtectedRoute } from '../features/auth/components/ProtectedRoute';
 import { AppLayout } from '../components/layout/AppLayout';
 
@@ -63,6 +64,14 @@ const router = createBrowserRouter([
           {
             path: '/interviews/:id/edit',
             element: <EditInterviewPage />,
+          },
+          {
+            path: '/interviews/:id/feedback/new',
+            element: <FeedbackFormPage mode="create" />,
+          },
+          {
+            path: '/interviews/:id/feedback/edit',
+            element: <FeedbackFormPage mode="edit" />,
           },
         ],
       },
