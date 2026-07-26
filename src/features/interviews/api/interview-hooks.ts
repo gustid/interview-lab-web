@@ -9,10 +9,11 @@ import {
 } from './interviews-api';
 import type { InterviewFilters, InterviewInput } from '../interview.types';
 
-export function useInterviews(filters: InterviewFilters) {
+export function useInterviews(filters: InterviewFilters, enabled = true) {
   return useQuery({
     queryKey: ['interviews', filters],
     queryFn: () => getInterviews(filters),
+    enabled,
   });
 }
 

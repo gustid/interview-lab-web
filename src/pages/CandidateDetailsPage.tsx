@@ -10,6 +10,7 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  Pagination,
   Paper,
   Stack,
   Typography,
@@ -24,6 +25,10 @@ import {
 import { getApiErrorMessage } from '../api/get-api-error-message';
 import { useCandidate } from '../features/candidates/api/use-candidate';
 import { useDeleteCandidate } from '../features/candidates/api/use-delete-candidate';
+import { useInterviews } from '../features/interviews/api/interview-hooks';
+import { InterviewsTable } from '../features/interviews/components/InterviewsTable';
+
+const INTERVIEW_PAGE_SIZE = 10;
 
 interface DetailRowProps {
   label: string;
@@ -46,6 +51,15 @@ export function CandidateDetailsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const candidateQuery = useCandidate(id ?? '');
+  const [interviewPage, setInterviewPage] = useState(1);
+  const interviewsQuery = useInterviews(
+    {
+      page: interviewPage,
+      pageSize: INTERVIEW_PAGE_SIZE,
+      ...(id && { candidateId: id }),
+    },
+    Boolean(id),
+  );
   const deleteCandidate = useDeleteCandidate();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -151,15 +165,58 @@ export function CandidateDetailsPage() {
         </Stack>
       </Paper>
 
-      <Paper variant="outlined" sx={{ p: 3, maxWidth: 800 }}>
-        <Typography variant="h6" gutterBottom>
-          Interview history
-        </Typography>
-        <Typography color="text.secondary">
-          This candidate's interviews will appear here after the interview
-          frontend is connected.
-        </Typography>
-      </Paper>
+      <Stack spacing={2}>
+        <Typography variant="h6">Interview history</Typography>
+
+        {interviewsQuery.isPending && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
+            <CircularProgress />
+          </Box>
+        )}
+
+        {interviewsQuery.isError && (
+          <Alert
+            severity="error"
+            action={
+              <Button
+                color="inherit"
+                size="small"
+                onClick={() => void interviewsQuery.refetch()}
+              >
+                Retry
+              </Button>
+            }
+          >
+            Interview history could not be loaded.
+          </Alert>
+        )}
+
+        {interviewsQuery.data?.data.length === 0 && (
+          <Paper variant="outlined" sx={{ p: 4, textAlign: 'center' }}>
+            <Typography color="text.secondary">
+              No interviews have been created for this candidate.
+            </Typography>
+          </Paper>
+        )}
+
+        {interviewsQuery.data && interviewsQuery.data.data.length > 0 && (
+          <>
+            <InterviewsTable
+              interviews={interviewsQuery.data.data}
+              candidates={[candidate]}
+            />
+            {interviewsQuery.data.pagination.totalPages > 1 && (
+              <Pagination
+                page={interviewsQuery.data.pagination.page}
+                count={interviewsQuery.data.pagination.totalPages}
+                onChange={(_, nextPage) => setInterviewPage(nextPage)}
+                color="primary"
+                sx={{ alignSelf: 'center' }}
+              />
+            )}
+          </>
+        )}
+      </Stack>
 
       <Dialog
         open={isDeleteDialogOpen}
