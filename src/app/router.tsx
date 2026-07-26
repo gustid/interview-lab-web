@@ -3,6 +3,9 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { CandidatesPage } from '../pages/CandidatesPage';
+import { CreateCandidatePage } from '../pages/CreateCandidatePage';
+import { CandidateDetailsPage } from '../pages/CandidateDetailsPage';
+import { EditCandidatePage } from '../pages/EditCandidatePage';
 import { InterviewsPage } from '../pages/InterviewsPage';
 import { ProtectedRoute } from '../features/auth/components/ProtectedRoute';
 import { AppLayout } from '../components/layout/AppLayout';
@@ -29,6 +32,18 @@ const router = createBrowserRouter([
           {
             path: '/candidates',
             element: <CandidatesPage />,
+          },
+          {
+            path: '/candidates/new',
+            element: <CreateCandidatePage />,
+          },
+          {
+            path: '/candidates/:id',
+            element: <CandidateDetailsPage />,
+          },
+          {
+            path: '/candidates/:id/edit',
+            element: <EditCandidatePage />,
           },
           {
             path: '/interviews',
