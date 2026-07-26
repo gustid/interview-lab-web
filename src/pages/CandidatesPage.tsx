@@ -1,13 +1,13 @@
 import { Stack, Typography } from '@mui/material';
 
-export function DashboardPage() {
+export function CandidatesPage() {
   return (
     <Stack spacing={1}>
       <Typography component="h1" variant="h4" sx={{ fontWeight: 700 }}>
-        Dashboard
+        Candidates
       </Typography>
       <Typography color="text.secondary">
-        Your interview practice overview will appear here.
+        Candidate management will be added next.
       </Typography>
     </Stack>
   );

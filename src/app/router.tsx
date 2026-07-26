@@ -2,7 +2,10 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { DashboardPage } from '../pages/DashboardPage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
+import { CandidatesPage } from '../pages/CandidatesPage';
+import { InterviewsPage } from '../pages/InterviewsPage';
 import { ProtectedRoute } from '../features/auth/components/ProtectedRoute';
+import { AppLayout } from '../components/layout/AppLayout';
 
 const router = createBrowserRouter([
   {
@@ -14,12 +17,26 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: '/dashboard',
-    element: (
-      <ProtectedRoute>
-        <DashboardPage />
-      </ProtectedRoute>
-    ),
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <AppLayout />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <DashboardPage />,
+          },
+          {
+            path: '/candidates',
+            element: <CandidatesPage />,
+          },
+          {
+            path: '/interviews',
+            element: <InterviewsPage />,
+          },
+        ],
+      },
+    ],
   },
   {
     path: '/',
