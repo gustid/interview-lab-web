@@ -5,5 +5,6 @@ export function useCandidate(id: string) {
   return useQuery({
     queryKey: ['candidates', id],
     queryFn: () => getCandidate(id),
+    enabled: Boolean(id),
   });
 }
