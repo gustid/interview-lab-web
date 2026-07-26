@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   validate:
-    name: Format, lint and build
+    name: Format, lint, test and build
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +29,9 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Run tests
+        run: npm test
 
       - name: Build
         run: npm run build

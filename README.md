@@ -232,6 +232,22 @@ Run ESLint:
 npm run lint
 ```
 
+Run the React Testing Library component tests once:
+
+```bash
+npm test
+```
+
+Run the tests in watch mode while developing:
+
+```bash
+npm run test:watch
+```
+
+The current tests cover candidate-form validation, normalized submission
+values, cancellation, and feedback-form validation and submission. GitHub
+Actions runs the test suite as part of frontend validation.
+
 Run the TypeScript and Vite production build:
 
 ```bash
@@ -305,7 +321,7 @@ flowchart LR
 
     Developer -->|"push / pull request"| GitHub
     GitHub --> Actions
-    Actions -->|"format, lint, build"| Actions
+    Actions -->|"format, lint, test, build"| Actions
     Actions -->|"manual deploy hook"| RenderWeb
     RenderWeb -->|"HTTPS / JWT"| RenderAPI
     RenderAPI --> Neon
