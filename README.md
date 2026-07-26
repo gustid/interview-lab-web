@@ -41,6 +41,8 @@ inactivity may take longer while the service starts.
   evolution would use short-lived access tokens and secure HttpOnly cookies.
 - Advanced cross-domain search and reporting trends are planned future
   improvements.
+- Candidate résumé upload is planned but is not exposed in the current UI.
+  The backend schema already reserves a nullable `resume_url` field.
 
 ## Architecture
 
@@ -369,6 +371,11 @@ https://interview-lab-web.onrender.com
 
 - Move authentication from `localStorage` to secure HttpOnly cookies.
 - Add refresh-token rotation, password reset, and email verification.
+- Add a résumé field to the candidate form. The browser will submit the
+  selected file through the authenticated API instead of storing it directly.
+  The API will validate the file and place it in private object storage, while
+  PostgreSQL keeps only its object reference and metadata. Authorized downloads
+  will use short-lived signed URLs.
 - Add advanced search across candidates, interviews, technologies, and
   feedback.
 - Add score and activity trends to reporting.
