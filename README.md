@@ -10,6 +10,7 @@ and monitor activity from a dashboard.
 - Frontend: https://interview-lab-web.onrender.com
 - API: https://interview-lab-api.onrender.com
 - API documentation: https://interview-lab-api.onrender.com/api/docs
+- [Architecture overview](https://github.com/gustid/interview-lab-api/blob/main/docs/architecture.md)
 
 The API runs on a free Render web service. The first request after a period of
 inactivity may take longer while the service starts.
@@ -83,6 +84,26 @@ flowchart LR
   layout.
 - **Feature folders** keep authentication, candidates, interviews, and
   feedback isolated from one another.
+
+## Design decisions
+
+- **React and Vite:** provide a small SPA development and static deployment
+  model.
+- **Feature-based organization:** keeps API code, hooks, forms, and components
+  close to their domain.
+- **TanStack Query:** separates server state from local UI state and provides
+  caching and mutation invalidation.
+- **React Hook Form:** handles form state and client-side validation without
+  excessive rerendering.
+- **Material UI:** provides a consistent desktop component system within the
+  assignment timeframe.
+- **Desktop-first scope:** prioritizes the required end-to-end workflow over
+  responsive navigation.
+- **JWT in `localStorage`:** is an explicit MVP tradeoff; secure HttpOnly
+  cookies are the intended production evolution.
+
+System-wide decisions and tradeoffs are described in the
+[architecture overview](https://github.com/gustid/interview-lab-api/blob/main/docs/architecture.md).
 
 ### Source structure
 
